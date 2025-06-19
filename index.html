@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preparados Perú - Información sobre Terremotos y Sismos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e74c3c;
+            --secondary: #3498db;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --alert: #f39c12;
+            --safe: #27ae60;
+            --warning: #e67e22; 
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.95)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(231, 76, 60, 0.1)" stroke-width="1"/></svg>');
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(231, 76, 60, 0.05)"/></svg>');
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .shake-light { animation: shake-light 0.5s; }
+        @keyframes shake-light {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            50% { transform: translateX(2px); }
+            75% { transform: translateX(-1px); }
+        }
+
+        .shake-intense { animation: shake-intense 0.8s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake-intense {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(0.5deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(0.5deg); }
+            50% { transform: translate(-1px, 2px) rotate(-0.5deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(0.5deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-0.5deg); }
+        }
+
+        .text-disarray { 
+            position: relative; 
+        }
+        .text-disarray span { 
+            display: inline-block; 
+            animation: textFall 0.7s forwards; 
+            opacity: 1; 
+        }
+        @keyframes textFall {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(5px) rotate(2deg); opacity: 0.8; } 
+            100% { transform: translateY(15px) rotate(8deg); opacity: 0; } 
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--dark), var(--primary));
+            color: white;
+            padding: 1.5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header-content p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .lima-tag {
+            background-color: var(--alert);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        
+        .nav-container {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000; 
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 8px; 
+        }
+        
+        .nav-btn {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 12px; 
+            margin: 4px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-size: 0.8rem; 
+        }
+        
+        .nav-btn:hover {
+            background-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn i {
+            margin-right: 6px;
+        }
+        
+        .container { 
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: none;
+            border-left: 5px solid var(--secondary);
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h2 i {
+            margin-right: 10px;
+            background-color: rgba(231, 76, 60, 0.1);
+            padding: 8px;
+            border-radius: 50%;
+        }
+
+        .section h3 { 
+            color: var(--secondary);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .section h4 {
+            color: var(--dark);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 1.5rem;
+        }
+        
+        .info-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .info-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            margin-top: 0; 
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-card h3 i {
+            margin-right: 10px;
+        }
+        
+        .step-by-step {
+            counter-reset: step-counter;
+            margin-left: 0px; 
+        }
+        
+        .step {
+            position: relative;
+            margin-bottom: 1.5rem;
+            padding-left: 45px; 
+        }
+        
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: var(--secondary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .step h4 { /* Para títulos dentro de cada paso, re-declarado para asegurar precedencia si es necesario */
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+         .step ul {
+            list-style-position: outside;
+            margin-left: 20px;
+        }
+
+        .emergency-contacts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .contact-card {
+            background-color: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .contact-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            margin-top: 0;
+        }
+        
+        .contact-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 10px 0;
+            display: block;
+        }
+
+        .contact-number a { color: inherit; text-decoration: none; }
+        .contact-number a:hover { text-decoration: underline; }
+        
+        .backpack-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+            gap: 1rem;
+        }
+        
+        .item {
+            background-color: white;
+            border: 1px solid var(--light);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .item:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.1);
+        }
+        
+        .item i { font-size: 1.8rem; color: var(--secondary); margin-bottom: 8px; } 
+        .item h4 { font-size: 0.9rem; margin-bottom: 5px; color: var(--dark); }
+        .item p { font-size: 0.8rem; color: #555; }
+        
+        .triangle-life { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; margin-top: 2rem; }
+        .triangle-img { flex: 1; min-width: 300px; text-align: center; }
+        .triangle-content { flex: 2; min-width: 300px; }
+        .triangle-svg { width: 100%; max-width: 300px; height: auto; }
+        
+        .alert-banner { background-color: var(--alert); color: white; padding: 1rem; border-radius: 8px; margin: 1.5rem 0; display: flex; align-items: center; }
+        .alert-banner i { font-size: 1.5rem; margin-right: 15px; }
+
+        .important-warning-banner { background-color: var(--warning); color: white; padding: 1.5rem; border-radius: 8px; margin: 2rem 0; display: flex; align-items: center; border-left: 5px solid var(--primary); }
+        .important-warning-banner i { font-size: 2rem; margin-right: 20px; }
+        .important-warning-banner h3 { color: white; margin-top: 0; margin-bottom: 0.5rem; }
+        
+        .safe-banner { background-color: var(--safe); color: white; padding: 1rem; border-radius: 8px; margin: 1.5rem 0; display: flex; align-items: center; }
+        .safe-banner i { font-size: 1.5rem; margin-right: 15px; }
+        
+        .map-container { margin-top: 2rem; height: 400px; background-color: var(--light); border-radius: 8px; overflow: hidden; position: relative; }
+        .map-overlay { position: absolute; top: 10px; left: 10px; background-color: rgba(255,255,255,0.9); padding: 1rem; border-radius: 8px; z-index: 10; max-width: 300px; }
+        .map-overlay h3 { margin-bottom: 10px; color: var(--primary); margin-top:0; }
+        .map-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--dark); font-weight: bold; text-align: center; padding: 20px; }
+        
+        footer { background-color: var(--dark); color: white; text-align: center; padding: 2rem 0; margin-top: 2rem; }
+        .footer-content { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .update-info { background-color: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; margin-top: 1rem; display: inline-block; }
+        .last-update { font-weight: bold; color: var(--alert); }
+
+        .sismo-simulation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            z-index: 2000; 
+            padding: 20px;
+        }
+        .sismo-simulation-modal-content {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: fadeInModal 0.5s ease-out;
+        }
+        @keyframes fadeInModal {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .sismo-simulation-modal-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: white !important; 
+            border-bottom: none !important; 
+            display: block !important; 
+            padding-bottom: 0 !important;
+        }
+         .sismo-simulation-modal-content h2 i { 
+            margin-right: 10px;
+            background-color: transparent !important; 
+            padding: 0 !important;
+            border-radius: 0 !important;
+            font-size: 2rem; 
+        }
+        .sismo-simulation-modal-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .sismo-simulation-modal-button {
+            background-color: var(--light);
+            color: var(--primary);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .sismo-simulation-modal-button:hover {
+            background-color: #ddd;
+        }
+        
+        @media (max-width: 992px) { 
+            .nav-btn { padding: 8px 10px; font-size: 0.75rem; margin: 3px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-btn { font-size: 0.7rem; padding: 6px 8px; }
+            .section { padding: 1.5rem; }
+            .header-content h1 { font-size: 2rem; }
+            .backpack-items { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));}
+        }
+        @media (max-width: 480px) {
+            .nav-btn { font-size: 0.65rem; padding: 5px 7px; i { margin-right: 4px;}}
+            .backpack-items { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));}
+            .item i {font-size: 1.5rem;}
+            .item h4 {font-size: 0.8rem;}
+            .sismo-simulation-modal-content h2 {font-size: 1.5rem;}
+            .sismo-simulation-modal-content p {font-size: 1rem;}
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-house-damage"></i> Preparados Perú</h1>
+            <p>Información completa sobre terremotos, sismos y preparación para emergencias en Lima</p>
+            <div class="lima-tag">Información específica para Lima Metropolitana</div>
+        </div>
+    </header>
+    
+    <div class="nav-container">
+        <nav>
+            <button class="nav-btn" data-target="que-es"><i class="fas fa-question-circle"></i> ¿Qué es?</button>
+            <button class="nav-btn" data-target="fenomenos"><i class="fas fa-paw"></i> Fenómenos Previos</button>
+            <button class="nav-btn" data-target="que-hacer"><i class="fas fa-person-running"></i> ¿Qué hacer?</button>
+            <button class="nav-btn" data-target="mochila"><i class="fas fa-briefcase-medical"></i> Mochila</button>
+            <button class="nav-btn" data-target="primeros-auxilios"><i class="fas fa-first-aid"></i> P. Auxilios</button>
+            <button class="nav-btn" data-target="peligros-adicionales"><i class="fas fa-skull-crossbones"></i> Peligros</button>
+            <button class="nav-btn" data-target="triangulo"><i class="fas fa-triangle-exclamation"></i> T. de Vida</button>
+            <button class="nav-btn" data-target="lugares"><i class="fas fa-map-marker-alt"></i> Z. Seguras</button>
+            <button class="nav-btn" data-target="contactos"><i class="fas fa-phone"></i> Contactos</button>
+        </nav>
+    </div>
+
+    <audio id="sismoAlertaSound" src="audio/sismo-alert.mp3" preload="auto"></audio> <!-- Cambia 'audio/sismo-alert.mp3' por la ruta REAL de tu archivo de sonido -->
+    
+    <div class="sismo-simulation-modal" id="sismoModal">
+        <div class="sismo-simulation-modal-content">
+            <h2><i class="fas fa-house-damage"></i> ¡SIMULACIÓN DE SISMO!</h2>
+            <p>Un sismo está ocurriendo. ¿Sabes qué hacer?</p>
+            <button class="sismo-simulation-modal-button" id="modalQueHacerBtn">Ver recomendaciones</button>
+        </div>
+    </div>
+
+    <main class="container">
+        <section id="que-es" class="section active">
+            <h2><i class="fas fa-question-circle"></i> ¿Qué es un Sismo o Terremoto?</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-mountain-city"></i> Definición</h3>
+                    <p class="text-sample-source">Un sismo o terremoto es un movimiento brusco de la Tierra causado por la liberación de energía acumulada en la corteza terrestre. El término "terremoto" se usa generalmente para sismos de mayor magnitud.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-ruler-combined"></i> Escalas de Medición</h3>
+                    <p class="text-sample-source"><strong>Escala de Richter/Magnitud de Momento (Mw):</strong> Mide la energía liberada. Cada punto representa un aumento significativo de energía.</p>
+                    <p><strong>Escala Mercalli Modificada (MMI):</strong> Mide la intensidad de la sacudida y los efectos observados en personas, objetos y estructuras.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-globe-americas"></i> Sismicidad en Perú</h3>
+                    <p class="text-sample-source">Perú se encuentra en el Cinturón de Fuego del Pacífico, una zona de alta actividad sísmica. Lima es particularmente vulnerable debido a la Falla de Lima y la cercanía a la zona de subducción de placas.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-book-open"></i> Términos Importantes</h3>
+                    <p><strong>Hipocentro (o Foco):</strong> Punto interior de la Tierra donde se origina el sismo.</p>
+                    <p><strong>Epicentro:</strong> Punto en la superficie terrestre directamente sobre el hipocentro.</p>
+                    <p><strong>Réplicas:</strong> Sismos más pequeños que ocurren después del sismo principal en la misma región.</p>
+                </div>
+            </div>
+            <div class="alert-banner">
+                <i class="fas fa-lightbulb"></i>
+                <div>
+                    <h3>¿Sabías que?</h3>
+                    <p class="text-sample-source">El silencio sísmico en Lima y Callao, que dura más de 270 años desde el devastador terremoto de 1746 (magnitud estimada 8.8-9.0), indica una gran acumulación de energía que podría liberarse en un futuro sismo de gran magnitud.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="fenomenos" class="section">
+            <h2><i class="fas fa-paw"></i> Fenómenos Previos y Mitos sobre Sismos</h2>
+            <p class="text-sample-source">A lo largo de la historia, se han reportado diversos fenómenos inusuales observados antes de algunos sismos. Es crucial entender que <strong>ninguno de estos fenómenos constituye un método científico confiable para predecir terremotos.</strong> La ciencia actual no puede predecir sismos con precisión.</p>
+            <div class="important-warning-banner">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <h3>¡No Confíe en Mitos para la Predicción!</h3>
+                    <p>La única defensa real contra los sismos es la <strong>PREPARACIÓN</strong> basada en información oficial y científica. No se deje llevar por rumores o supuestas predicciones.</p>
+                </div>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-dog"></i> Comportamiento Animal Anómalo</h3>
+                    <p class="text-sample-source"><strong>Observaciones:</strong> Se han reportado casos de animales (perros, gatos, aves, peces, insectos) mostrando nerviosismo, agitación, escondiéndose o huyendo horas o días antes de un sismo. Algunos ejemplos: perros ladrando incesantemente, aves volando en patrones extraños, peces saltando fuera del agua.</p>
+                    <p><strong>Posibles Explicaciones (No Concluyentes):</strong> Se especula que algunos animales podrían ser sensibles a cambios sutiles en el campo electromagnético, vibraciones precursoras (microsismos), o liberación de gases del subsuelo.</p>
+                    <p><strong>Realidad:</strong> Aunque anecdóticamente interesante, no hay un patrón consistente ni científicamente validado que permita usar el comportamiento animal para predecir sismos.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-bolt"></i> Luces de Terremoto (EQL)</h3>
+                    <p class="text-sample-source"><strong>Observaciones:</strong> Destellos luminosos en el cielo, similares a auroras o relámpagos, reportados antes, durante o después de sismos fuertes. Pueden ser de varios colores (blanco, azul, verde).</p>
+                    <p><strong>Posibles Explicaciones (En Investigación):</strong> Varias teorías incluyen la piezoelectricidad (cargas eléctricas generadas por la presión sobre rocas de cuarzo), fricción entre fallas, o ionización del aire por liberación de gases radón.</p>
+                    <p><strong>Realidad:</strong> Fenómeno raro, no siempre presente y difícil de estudiar. No es un indicador fiable.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-volume-up"></i> Sonidos Subterráneos</h3>
+                    <p class="text-sample-source"><strong>Observaciones:</strong> Reportes de ruidos extraños, como zumbidos, estruendos o crujidos, provenientes del subsuelo antes de un sismo.</p>
+                    <p><strong>Posibles Explicaciones:</strong> Podrían ser microsismos o el fracturamiento de rocas a profundidad, generando ondas acústicas de baja frecuencia.</p>
+                    <p><strong>Realidad:</strong> Difícil de distinguir de otros ruidos ambientales y no es un predictor consistente.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-water"></i> Cambios en Agua Subterránea</h3>
+                    <p class="text-sample-source"><strong>Observaciones:</strong> Variaciones en el nivel de pozos de agua, cambios en el flujo de manantiales, o aparición de agua turbia o con olores inusuales.</p>
+                    <p><strong>Posibles Explicaciones:</strong> La deformación de la corteza terrestre antes de un sismo podría alterar la permeabilidad de las rocas y los acuíferos.</p>
+                    <p><strong>Realidad:</strong> Estos cambios pueden deberse a múltiples factores (climáticos, actividad humana). No es un indicador claro por sí solo.</p>
+                </div>
+            </div>
+            <div class="safe-banner">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <h3>La Ciencia y la Predicción de Sismos</h3>
+                    <p class="text-sample-source">Actualmente, la predicción exacta de sismos (dónde, cuándo y de qué magnitud) no es posible. Los científicos se enfocan en el pronóstico sísmico (probabilidades a largo plazo) y en sistemas de alerta temprana (detectan el inicio del sismo y dan segundos de aviso antes de que lleguen las ondas más fuertes a ciudades cercanas).</p>
+                    <p><strong>Confíe en fuentes oficiales como INDECI y el Instituto Geofísico del Perú (IGP).</strong></p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="que-hacer" class="section">
+            <h2><i class="fas fa-person-running"></i> ¿Qué hacer antes, durante y después de un sismo?</h2>
+            <div class="step-by-step">
+                <div class="step">
+                    <h4><i class="fas fa-calendar-alt"></i> Antes del Sismo (Preparación Integral)</h4>
+                    <p class="text-sample-source">La preparación es tu mejor defensa. Invierte tiempo en:</p>
+                    <ul>
+                        <li><strong>Plan Familiar de Emergencia:</strong> Definan roles, puntos de encuentro (uno cerca de casa, otro fuera del barrio), y formas de comunicación alternativas (contacto fuera de la ciudad). Practíquenlo.</li>
+                        <li><strong>Identificación de Zonas Seguras:</strong>
+                            <ul>
+                                <li><strong>Internas:</strong> Columnas estructurales (no tabiques), muros de carga (generalmente los que soportan el techo o pisos superiores), bajo mesas y escritorios robustos. Marcar estas zonas con cinta reflectante puede ayudar.</li>
+                                <li><strong>Externas:</strong> Patios, jardines, parques, plazas. Lejos de edificios, postes y cables.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Aseguramiento de Objetos:</strong> Fija estanterías, repisas y armarios altos a la pared. Coloca objetos pesados o frágiles en los estantes más bajos. Asegura cuadros, espejos y lámparas de techo.</li>
+                        <li><strong>Conocer Ubicación de Llaves de Paso:</strong> Aprende a cerrar las llaves de agua, gas y el interruptor general de electricidad. Enséñalo a miembros adultos de la familia.</li>
+                        <li><strong>Mochila de Emergencia y Caja de Reserva:</strong> Tenlas listas y accesibles (ver sección específica).</li>
+                        <li><strong>Simulacros:</strong> Participa activamente en los simulacros nacionales y organiza simulacros en casa y trabajo. Cronometra la evacuación.</li>
+                        <li><strong>Información y Capacitación:</strong> Aprende primeros auxilios básicos. Infórmate sobre los riesgos específicos de tu zona.</li>
+                    </ul>
+                </div>
+                <div class="step">
+                    <h4><i class="fas fa-person-shelter"></i> Durante el Sismo (Actuación Inmediata)</h4>
+                    <p class="text-sample-source">La regla de oro es <strong>MANTENER LA CALMA</strong>. El pánico puede ser más peligroso que el sismo mismo.</p>
+                    <ul>
+                        <li><strong>Si está en Interiores (Casa, Oficina, Escuela):</strong>
+                            <ul>
+                                <li><strong>AGÁCHESE, CÚBRASE Y SUJÉTESE (ACS):</strong> Es la técnica más recomendada.
+                                    <ul>
+                                        <li><strong>Agáchese</strong> al suelo antes de que el sismo lo derribe.</li>
+                                        <li><strong>Cúbrase</strong> debajo de una mesa o escritorio fuerte. Si no hay muebles cerca, péguese a un muro interior estructural, agáchese y cúbrase la cabeza y el cuello con los brazos.</li>
+                                        <li><strong>Sujétese</strong> al mueble bajo el que está y prepárese para moverse con él.</li>
+                                    </ul>
+                                </li>
+                                <li>Aléjese de ventanas, espejos, vidrios, estanterías, bibliotecas, lámparas y cualquier objeto que pueda caer.</li>
+                                <li><strong>NO USE ASCENSORES.</strong> Podrían quedar atrapados o desplomarse.</li>
+                                <li><strong>NO CORRA HACIA LAS SALIDAS</strong> mientras el edificio está temblando. Es más probable que se lastime por la caída de escombros o por tropiezos. Espere a que el movimiento cese para evacuar.</li>
+                                <li>Si está en la cama, quédese ahí y protéjase la cabeza con una almohada, a menos que esté debajo de una lámpara pesada o un estante que pueda caer.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Si está en Exteriores:</strong>
+                            <ul>
+                                <li>Aléjese de edificios (riesgo de caída de fachadas, vidrios, cornisas), postes de luz o teléfono, cables eléctricos, árboles altos y muros inestables.</li>
+                                <li>Busque un área abierta y permanezca allí hasta que el temblor pase.</li>
+                                <li>Si está en una zona muy concurrida, tenga cuidado con el pánico de otras personas.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Si está Conduciendo un Vehículo:</strong>
+                            <ul>
+                                <li>Reduzca la velocidad gradualmente y deténgase en un lugar seguro, lejos de edificios altos, postes, árboles, puentes, pasos a desnivel y cables.</li>
+                                <li>Permanezca dentro del vehículo con el cinturón de seguridad puesto hasta que termine el sismo. El vehículo ofrece cierta protección.</li>
+                                <li>Encienda las luces de emergencia.</li>
+                                <li>Evite detenerse en medio de la vía si es posible, para no obstruir a vehículos de emergencia.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Si está en un Lugar Concurrido (Cine, Estadio, Centro Comercial):</strong>
+                            <ul>
+                                <li>Mantenga la calma y no corra hacia las salidas. Protéjase la cabeza y cuello con los brazos.</li>
+                                <li>Siga las instrucciones del personal de seguridad o brigadistas del lugar.</li>
+                                <li>Al finalizar el sismo, evacúe de manera ordenada por las rutas señalizadas.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="step">
+                    <h4><i class="fas fa-door-open"></i> Después del Sismo (Evaluación y Respuesta Segura)</h4>
+                    <p class="text-sample-source">Una vez que el movimiento principal haya cesado:</p>
+                    <ul>
+                        <li><strong>Verifique su Estado y el de los Demás:</strong> Revise si usted o personas cercanas están heridas. Si está capacitado, brinde primeros auxilios. No mueva a personas gravemente heridas a menos que estén en peligro inminente.</li>
+                        <li><strong>Inspeccione su Entorno:</strong>
+                            <ul>
+                                <li>Revise si hay fugas de gas (olor característico). Si sospecha una fuga, no encienda luces ni aparatos, ventile abriendo ventanas (si es seguro) y cierre la llave general de gas. Evacúe y avise a los bomberos desde fuera.</li>
+                                <li>Verifique si hay daños en el sistema eléctrico (chispas, cables sueltos, olor a quemado). Si es así, desconecte el interruptor general de electricidad si es seguro hacerlo.</li>
+                                <li>Busque daños estructurales en su vivienda (grietas grandes en paredes o columnas, inclinaciones, sonidos de crujido). Si considera que no es seguro, evacúe.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Evacuación Ordenada (si es necesario):</strong> Use las rutas de evacuación previamente identificadas. Lleve su mochila de emergencia. Ayude a niños, ancianos y personas con discapacidad. Use escaleras, NUNCA ascensores.</li>
+                        <li><strong>Esté Alerta a Réplicas:</strong> Son sismos más pequeños que pueden ocurrir después del principal y causar más daños o pánico.</li>
+                        <li><strong>Comunicaciones:</strong> Use mensajes de texto (SMS) o aplicaciones de mensajería por internet para comunicarse, ya que las líneas telefónicas suelen congestionarse. Evite llamadas largas.</li>
+                        <li><strong>Información Oficial:</strong> Sintonice radios a pilas (AM/FM) para escuchar información y recomendaciones de las autoridades (INDECI, PNP, Bomberos). No propague rumores ni información no verificada.</li>
+                        <li><strong>No Ingrese a Edificios Dañados:</strong> Espere la evaluación de expertos.</li>
+                        <li><strong>Ayuda Comunitaria:</strong> Colabore con sus vecinos en la medida de sus posibilidades, siempre priorizando su seguridad.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="safe-banner"> <i class="fas fa-check-circle"></i> <div><h3>Zonas Seguras Internas Clave</h3> <p>Priorice ubicarse junto a columnas estructurales, bajo vigas de carga sólidas o debajo de mesas robustas. Siempre lejos de ventanas, espejos y objetos que puedan caer o romperse.</p></div></div>
+            <div class="alert-banner"> <i class="fas fa-ban"></i> <div><h3>Errores Comunes a Evitar</h3> <p>No correr desesperadamente durante el sismo. No usar ascensores. No ubicarse bajo marcos de puertas no estructurales. No encender fósforos, velas ni interruptores eléctricos si sospecha fuga de gas. No propagar rumores ni noticias falsas.</p></div></div>
+        </section>
+
+        <section id="mochila" class="section">
+            <h2><i class="fas fa-briefcase-medical"></i> Mochila de Emergencia y Caja de Reserva</h2>
+            <p class="text-sample-source">La <strong>Mochila de Emergencia</strong> es para las primeras 24-48 horas. La <strong>Caja de Reserva</strong> (o Combo de Supervivencia INDECI) debe tener provisiones para 2 a 4 días adicionales y se guarda en un lugar seguro y seco.</p>
+            <h3><i class="fas fa-list-check"></i> Contenido Esencial de la Mochila:</h3>
+            <div class="backpack-items">
+                <div class="item"><i class="fas fa-bottle-water"></i><h4>Agua</h4><p>Mín. 2L/persona</p></div>
+                <div class="item"><i class="fas fa-drumstick-bite"></i><h4>Alimentos NP</h4><p>Enlatados, barras</p></div>
+                <div class="item"><i class="fas fa-kit-medical"></i><h4>Botiquín</h4><p>Básico + personal</p></div>
+                <div class="item"><i class="fas fa-lightbulb"></i><h4>Linterna</h4><p>+ Pilas</p></div>
+                <div class="item"><i class="fas fa-radio"></i><h4>Radio</h4><p>A pilas</p></div>
+                <div class="item"><i class="fas fa-id-card"></i><h4>Documentos</h4><p>Copias</p></div>
+                <div class="item"><i class="fas fa-key"></i><h4>Llaves</h4><p>Casa/Auto</p></div>
+                <div class="item"><i class="fas fa-money-bill-wave"></i><h4>Efectivo</h4><p>Monedas</p></div>
+                <div class="item"><i class="fas fa-mobile-alt"></i><h4>Celular</h4><p>+ Cargador ext.</p></div>
+                <div class="item"><i class="fas fa-mask-face"></i><h4>Mascarillas</h4><p>Polvo</p></div>
+                <div class="item"><i class="fas fa-whistle"></i><h4>Silbato</h4><p>Ayuda</p></div>
+                <div class="item"><i class="fas fa-toilet-paper"></i><h4>Higiene</h4><p>Básicos</p></div>
+                <div class="item"><i class="fas fa-shirt"></i><h4>Abrigo</h4><p>Manta ligera</p></div>
+                <div class="item"><i class="fas fa-pen-nib"></i><h4>Agenda</h4><p>+ Lapicero</p></div>
+                <div class="item"><i class="fas fa-hand-sparkles"></i><h4>Alcohol en Gel</h4><p>Desinfección</p></div>
+                <div class="item"><i class="fas fa-tape"></i><h4>Cinta Adhesiva</h4><p>Multiusos</p></div>
+            </div>
+            <div class="info-grid" style="margin-top: 2rem;">
+                <div class="info-card">
+                    <h3><i class="fas fa-users-cog"></i> Necesidades Específicas</h3>
+                    <p class="text-sample-source">Adapta la mochila a las necesidades de cada miembro: bebés (pañales, leche), adultos mayores (medicamentos específicos, lentes de repuesto), personas con enfermedades crónicas (insumos médicos), mascotas (comida, correa, bozal si es necesario).</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-box-archive"></i> Caja de Reserva (INDECI)</h3>
+                    <p class="text-sample-source">Debe contener más agua embotellada, alimentos no perecibles variados, ropa de abrigo adicional, artículos de higiene personal y limpieza, herramientas básicas (cuchilla multiusos, cuerdas, cinta adhesiva resistente), lona o plástico grueso, una olla pequeña y utensilios básicos. Revísala cada 6 meses.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="primeros-auxilios" class="section">
+            <h2><i class="fas fa-first-aid"></i> Primeros Auxilios Básicos en Sismos</h2>
+            <div class="important-warning-banner"> <i class="fas fa-exclamation-triangle"></i> <div> <h3>¡IMPORTANTE! LEA ANTES DE CONTINUAR</h3> <p>Esta sección ofrece una guía básica. <strong>NO REEMPLAZA la capacitación profesional en primeros auxilios.</strong> Actúe con precaución. Su seguridad es lo primero. Si no está seguro, espere ayuda especializada. Llame a los números de emergencia.</p> </div> </div>
+            <h3><i class="fas fa-shield-alt"></i> Principio Básico: P.A.S. (Proteger, Avisar, Socorrer)</h3>
+            <div class="step-by-step">
+                <div class="step"><h4>Proteger:</h4><p class="text-sample-source">Asegure la zona para usted y la víctima. Elimine peligros (si es posible y seguro). No se convierta en otra víctima.</p></div>
+                <div class="step"><h4>Avisar:</h4><p class="text-sample-source">Llame a los servicios de emergencia (106 SAMU, 116 Bomberos, 105 Policía) o pida a alguien que lo haga. Indique claramente qué sucede y dónde.</p></div>
+                <div class="step"><h4>Socorrer:</h4><p class="text-sample-source">Evalúe a la víctima (consciencia, respiración, pulso). Aplique primeros auxilios según sus conocimientos y la situación, priorizando las lesiones que amenazan la vida.</p></div>
+            </div>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-user-injured"></i> Evaluación Inicial de la Víctima</h3>
+                    <p class="text-sample-source"><strong>1. Consciencia:</strong> Hable a la víctima en voz alta (ej. "¿Me escucha?"). Sacuda suavemente sus hombros. Si no responde, está inconsciente.</p>
+                    <p><strong>2. Respiración:</strong> Ver, Oír, Sentir la respiración por no más de 10 segundos. Acerque su mejilla a su boca/nariz, mire su pecho.</p>
+                    <p><strong>3. Pulso:</strong> (Si está capacitado) Palpe el pulso carotídeo (cuello) o radial (muñeca).</p>
+                    <p><strong>Actúe según lo encontrado.</strong> Si no responde y no respira normalmente, podría necesitar RCP (ver más abajo).</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-band-aid"></i> Heridas y Hemorragias</h3>
+                    <p class="text-sample-source"><strong>Reconocimiento:</strong> Cortes, raspaduras, punciones. Sangrado leve, moderado o severo (chorro pulsátil o flujo constante y abundante).</p>
+                    <p><strong>Qué hacer:</strong></p>
+                    <ol>
+                        <li>Lávese las manos o use guantes si es posible.</li>
+                        <li><strong>Presión Directa:</strong> Aplique un apósito limpio (gasa, tela) directamente sobre la herida y presione firmemente.</li>
+                        <li><strong>Elevación:</strong> Si la herida está en una extremidad y no hay fractura, elévela por encima del nivel del corazón.</li>
+                        <li>Si el sangrado no se detiene y es severo, mantenga la presión y busque ayuda médica urgente. No retire el primer apósito si se empapa, coloque más encima.</li>
+                    </ol>
+                    <p><strong>A uno mismo:</strong> Aplique presión con su mano o un paño limpio. Si es en un brazo, puede presionar la herida contra su cuerpo.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-bone"></i> Fracturas y Esguinces</h3>
+                    <p class="text-sample-source"><strong>Reconocimiento:</strong> Dolor intenso, hinchazón, deformidad, incapacidad para mover la zona, hematoma, a veces se oye un chasquido. En un esguince, hay dolor e hinchazón pero usualmente no deformidad ósea.</p>
+                    <p><strong>Qué hacer (sospecha de fractura):</strong></p>
+                    <ol>
+                        <li><strong>NO MOVER</strong> innecesariamente la parte lesionada. No intente enderezarla.</li>
+                        <li><strong>Inmovilizar:</strong> Use férulas improvisadas (cartón, madera, revistas enrolladas) acolchadas, sujetándolas por encima y por debajo de la lesión, sin apretar demasiado.</li>
+                        <li><strong>Aplicar Frío:</strong> Envuelva hielo o una compresa fría en un paño y aplíquelo para reducir hinchazón y dolor (no directamente sobre la piel).</li>
+                        <li>Eleve la extremidad si es posible y no causa más dolor.</li>
+                        <li>Busque ayuda médica.</li>
+                    </ol>
+                    <p><strong>A uno mismo:</strong> Si es un brazo, puede usar un cabestrillo improvisado con una tela. Para una pierna, intente no apoyarla.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-fire-alt"></i> Quemaduras (Térmicas)</h3>
+                    <p class="text-sample-source"><strong>Reconocimiento:</strong> Piel enrojecida (1er grado), ampollas (2do grado), piel carbonizada o blanquecina (3er grado).</p>
+                    <p><strong>Qué hacer:</strong></p>
+                    <ol>
+                        <li>Aleje a la víctima de la fuente de calor. Si la ropa está en llamas, apáguela (haciéndola rodar, cubriéndola con una manta no sintética).</li>
+                        <li><strong>Enfriar:</strong> Aplique agua corriente fresca (no helada) sobre la quemadura durante 10-20 minutos. NO use hielo directamente.</li>
+                        <li>Retire joyas y ropa ajustada de la zona quemada, a menos que esté adherida a la piel.</li>
+                        <li>Cubra la quemadura con un apósito estéril y seco, o un paño limpio. NO use algodón ni aplique cremas o ungüentos caseros.</li>
+                        <li>NO reviente las ampollas.</li>
+                        <li>Busque ayuda médica, especialmente para quemaduras extensas, de 2do o 3er grado, o en cara, manos, pies, genitales o vías respiratorias.</li>
+                    </ol>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-head-side-cough"></i> Asfixia (Polvo, Humo, Obstrucción)</h3>
+                    <p class="text-sample-source"><strong>Reconocimiento:</strong> Tos persistente, dificultad para respirar, coloración azulada de labios/piel (cianosis), sibilancias, posible pérdida de consciencia. Si es por obstrucción, la persona puede llevarse las manos al cuello.</p>
+                    <p><strong>Qué hacer (Polvo/Humo):</strong></p>
+                    <ol>
+                        <li>Aleje a la víctima (y a usted mismo) del ambiente contaminado a un área con aire fresco.</li>
+                        <li>Ayude a la persona a sentarse en una posición cómoda que facilite la respiración.</li>
+                        <li>Aflójele la ropa apretada.</li>
+                        <li>Si tiene un inhalador y está prescrito, ayúdele a usarlo.</li>
+                        <li>Busque ayuda médica si la dificultad respiratoria persiste o empeora.</li>
+                    </ol>
+                    <p><strong>Qué hacer (Obstrucción por cuerpo extraño - Maniobra de Heimlich, si está capacitado):</strong> Solo si la persona está consciente, tose débilmente o no puede hablar/toser/respirar. *Requiere entrenamiento.*</p>
+                    <p><strong>A uno mismo (Obstrucción):</strong> Si está solo, puede intentar la auto-maniobra de Heimlich presionando su abdomen contra el respaldo de una silla o borde de una mesa.</p>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-heart-pulse"></i> Estado de Shock</h3>
+                    <p class="text-sample-source"><strong>Reconocimiento:</strong> Palidez, piel fría y húmeda, sudoración, pulso rápido y débil, respiración rápida y superficial, mareo, confusión, ansiedad, posible pérdida de consciencia. El shock puede ser causado por hemorragia severa, quemaduras graves, etc.</p>
+                    <p><strong>Qué hacer:</strong></p>
+                    <ol>
+                        <li>Trate la causa aparente del shock (ej. controlar hemorragia).</li>
+                        <li>Acueste a la víctima boca arriba.</li>
+                        <li>Eleve sus piernas unos 30 cm, a menos que sospeche fractura de piernas, cadera, pelvis o columna, o lesión en la cabeza.</li>
+                        <li>Aflójele la ropa apretada.</li>
+                        <li>Abríguela con una manta o ropa para evitar la pérdida de calor corporal.</li>
+                        <li>NO le dé nada de comer ni beber.</li>
+                        <li>Busque ayuda médica urgente.</li>
+                    </ol>
+                </div>
+                 <div class="info-card">
+                    <h3><i class="fas fa-user-md"></i> Lesiones en Cabeza, Cuello o Espalda</h3>
+                    <p class="text-sample-source"><strong>Reconocimiento:</strong> Pérdida de consciencia (incluso breve), confusión, somnolencia, dolor de cabeza intenso, vómitos, convulsiones, sangrado o líquido claro por nariz/oídos, hematomas alrededor de ojos/orejas, debilidad o parálisis en extremidades, dolor en cuello/espalda.</p>
+                    <p><strong>Qué hacer:</strong></p>
+                    <ol>
+                        <li><strong>NO MOVER A LA VÍCTIMA,</strong> a menos que haya peligro inminente (incendio, derrumbe). Moverla podría agravar la lesión.</li>
+                        <li>Inmovilice la cabeza y el cuello manualmente, manteniéndolos alineados con el cuerpo.</li>
+                        <li>Llame a emergencias inmediatamente.</li>
+                        <li>Controle la respiración y la consciencia.</li>
+                        <li>Si hay sangrado, aplique presión suave.</li>
+                    </ol>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-house-crack"></i> Síndrome de Aplastamiento</h3>
+                    <p class="text-sample-source"><strong>Reconocimiento:</strong> Persona atrapada bajo escombros o un objeto pesado por un tiempo prolongado (generalmente más de 15-30 minutos).</p>
+                    <p><strong>Qué hacer:</strong></p>
+                    <ol>
+                        <li><strong>NO INTENTE LIBERAR A LA VÍCTIMA BRUSCAMENTE</strong> si ha estado atrapada por mucho tiempo, especialmente si una extremidad grande está comprimida. La liberación súbita puede causar un flujo de toxinas al torrente sanguíneo (síndrome de reperfusión), que puede ser fatal.</li>
+                        <li>Llame a equipos de rescate especializados inmediatamente. Ellos saben cómo manejar esta situación.</li>
+                        <li>Mientras espera, si es seguro acercarse, intente tranquilizar a la víctima.</li>
+                        <li>Si está consciente y puede tragar, y si el atrapamiento es prolongado, se le podría dar pequeños sorbos de agua (si los rescatistas lo indican y se prevé una extracción larga).</li>
+                        <li>Proteja a la víctima de más lesiones o del ambiente (frío, sol).</li>
+                    </ol>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-lungs"></i> RCP (Reanimación Cardiopulmonar) - Mención</h3>
+                    <p><strong>Cuándo:</strong> Solo si una persona está INCONSCIENTE y NO RESPIRA NORMALMENTE.</p>
+                    <p>La RCP combina compresiones torácicas y, a veces, ventilaciones para mantener el flujo de sangre oxigenada al cerebro hasta que llegue ayuda médica avanzada.</p>
+                    <p><strong>¡La RCP efectiva requiere CAPACITACIÓN PRÁCTICA!</strong> Esta guía no puede enseñarle a hacer RCP. Busque cursos certificados (Cruz Roja, Bomberos, SAMU).</p>
+                    <p><strong>Pasos básicos si está capacitado y decide actuar:</strong>
+                        1. Asegure la escena.
+                        2. Verifique respuesta y respiración.
+                        3. Pida a alguien que llame a emergencias y busque un DEA (Desfibrilador Externo Automático) si hay uno disponible.
+                        4. Inicie compresiones torácicas fuertes y rápidas en el centro del pecho.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="peligros-adicionales" class="section">
+            <h2><i class="fas fa-skull-crossbones"></i> Peligros Adicionales: Gas y Electricidad</h2>
+            <p class="text-sample-source">Después de un sismo, pueden surgir peligros como fugas de gas o problemas eléctricos que requieren atención inmediata y precauciones específicas.</p>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3><i class="fas fa-smog"></i> Fugas de Gas</h3>
+                    <p class="text-sample-source"><strong>Reconocimiento:</strong> Olor característico a gas (similar a huevo podrido), sonido de silbido, burbujas en agua estancada, polvo levantándose del suelo.</p>
+                    <p><strong>Qué hacer:</strong></p>
+                    <div class="step-by-step">
+                        <div class="step"><h4>¡NO ACCIONE NADA ELÉCTRICO!</h4><p>No encienda luces, no use teléfonos dentro del área, no opere aparatos. Una chispa puede causar explosión.</p></div>
+                        <div class="step"><h4>Ventile (si es seguro):</h4><p>Abra puertas y ventanas si no genera chispas.</p></div>
+                        <div class="step"><h4>Evacúe Inmediatamente:</h4><p>Salga y alerte a otros.</p></div>
+                        <div class="step"><h4>Cierre la Llave de Paso (si sabe y es seguro):</h4><p>Si conoce la llave principal y es accesible de forma segura (exterior), ciérrela (perpendicular a la tubería).</p></div>
+                        <div class="step"><h4>Llame desde un Lugar Seguro:</h4><p>Lejos de la fuga, llame al 116 (Bomberos) o a la compañía de gas.</p></div>
+                        <div class="step"><h4>No Regrese:</h4><p>Hasta que las autoridades lo declaren seguro.</p></div>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-bolt-lightning"></i> Peligros Eléctricos</h3>
+                    <p class="text-sample-source"><strong>Reconocimiento:</strong> Cables caídos/colgando (¡asuma energizados!), chispas, humo/llamas de equipos eléctricos, zumbido, olor a quemado.</p>
+                    <p><strong>Qué hacer (Cables Caídos / Instalaciones Dañadas):</strong></p>
+                    <div class="step-by-step">
+                        <div class="step"><h4>¡NO SE ACERQUE NI TOQUE!</h4><p>Manténgase al menos a 10 metros de cables caídos y objetos en contacto.</p></div>
+                        <div class="step"><h4>Advierta a Otros:</h4><p>Alerte para que se mantengan alejados.</p></div>
+                        <div class="step"><h4>Llame a Emergencias:</h4><p>Informe a compañía eléctrica o 105 (Policía) / 116 (Bomberos).</p></div>
+                        <div class="step"><h4>Vehículo en contacto con cable:</h4><p>Permanezca dentro a menos que haya riesgo de incendio. Si debe salir, salte con pies juntos, lejos, sin tocar auto y suelo al mismo tiempo. Aléjese saltando con pies juntos.</p></div>
+                    </div>
+                    <h4 style="margin-top:1.5rem; color: var(--primary);">Si Alguien Sufre un Choque Eléctrico:</h4>
+                    <p class="text-sample-source"><strong>¡SU SEGURIDAD PRIMERO! No se convierta en otra víctima.</strong></p>
+                    <div class="step-by-step">
+                        <div class="step"><h4>NO TOQUE A LA VÍCTIMA:</h4><p>Si aún está en contacto con la fuente, no la toque.</p></div>
+                        <div class="step"><h4>Corte la Corriente (si seguro):</h4><p>Desconecte interruptor principal o desenchufe.</p></div>
+                        <div class="step"><h4>Separe Víctima de Fuente (SI CORRIENTE NO SE PUEDE CORTAR Y USTED AISLADO):</h4><p>Use objeto SECO y NO CONDUCTOR (madera, plástico). Párese en superficie seca y aislada.</p></div>
+                        <div class="step"><h4>Una Vez Segura la Escena:</h4><p>Evalúe consciencia y respiración. Llame al 106 (SAMU).</p></div>
+                        <div class="step"><h4>Inicie RCP (si necesario y capacitado):</h4><p>Si inconsciente y no respira normal.</p></div>
+                        <div class="step"><h4>Busque Quemaduras:</h4><p>Cubra con apósitos limpios y secos.</p></div>
+                        <div class="step"><h4>Trate el Shock:</h4><p>Mantenga acostada y abrigada.</p></div>
+                        <div class="step"><h4>Evaluación Médica Urgente:</h4><p>Toda víctima de choque eléctrico necesita ser evaluada por un médico.</p></div>
+                    </div>
+                     <p><strong>Síntomas de choque eléctrico en uno mismo (leve):</strong> Hormigueo, contracción muscular. Aléjese o interrumpa contacto. Busque ayuda.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="triangulo" class="section">
+            <h2><i class="fas fa-triangle-exclamation"></i> El Triángulo de la Vida: ¿Mito o Realidad?</h2>
+            <div class="triangle-life">
+                <div class="triangle-img"> 
+                    <svg class="triangle-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"> 
+                        <rect x="20" y="20" width="160" height="160" fill="#e0e0e0" stroke="#bdbdbd" stroke-width="2"/> 
+                        <polygon points="100,40 160,160 40,160" fill="#3498db" fill-opacity="0.3" stroke="#3498db" stroke-width="2"/> 
+                        <circle cx="100" cy="100" r="10" fill="#e74c3c"/> 
+                        <text x="100" y="100" text-anchor="middle" fill="white" font-size="10" dy=".3em">TÚ</text> 
+                        <text x="100" y="30" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Objeto resistente</text> 
+                        <text x="50" y="190" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Espacio vital</text> 
+                        <text x="150" y="190" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Espacio vital</text> 
+                    </svg> 
+                </div>
+                <div class="triangle-content"> 
+                    <p class="text-sample-source">El "Triángulo de la Vida" es una teoría de supervivencia en terremotos popularizada por Douglas Copp. Sostiene que cuando los edificios colapsan, los techos y objetos pesados caen sobre otros objetos, dejando un "vacío de supervivencia" o "triángulo" a su lado. La idea es ubicarse en estos espacios en lugar de debajo de los objetos.</p>
+                    <h3><i class="fas fa-question-circle"></i> ¿Cómo se supone que funciona?</h3>
+                    <ul>
+                        <li>Al colapsar un techo o un piso superior, este se apoyaría sobre un objeto sólido (sofá, escritorio, cama), formando un espacio triangular protector al lado del objeto.</li>
+                        <li>Se sugiere colocarse en posición fetal en este espacio.</li>
+                        <li>Ejemplos de objetos que podrían formar estos vacíos: Sofás robustos, camas bajas y fuertes, escritorios metálicos pesados, incluso pilas compactas de papel o periódicos si son suficientemente grandes y estables.</li>
+                    </ul>
+                    <h3><i class="fas fa-exclamation-triangle"></i> Críticas, Limitaciones y Controversia</h3>
+                    <p class="text-sample-source">A pesar de su aparente lógica en ciertos escenarios, el "Triángulo de la Vida" es <strong>altamente controvertido</strong> y <strong>NO es la recomendación principal</strong> de la mayoría de las agencias de emergencia a nivel mundial, incluyendo INDECI en Perú.</p>
+                    <ul>
+                        <li><strong>Tipo de Colapso:</strong> La teoría asume un colapso tipo "panqueque" donde los techos caen relativamente intactos. Sin embargo, los edificios pueden colapsar de muchas maneras (ej. inclinándose, desmoronándose).</li>
+                        <li><strong>Tipo de Construcción:</strong> En edificios de adobe o madera con uniones débiles, las paredes pueden desmoronarse hacia adentro o hacia afuera, eliminando cualquier "triángulo". En estos casos, estar cerca de un objeto podría ser más peligroso.</li>
+                        <li><strong>Movimiento de Objetos:</strong> Durante un sismo fuerte, los objetos (incluso los pesados) pueden deslizarse, volcarse o romperse, eliminando el supuesto espacio seguro o incluso aplastando a quien esté al lado.</li>
+                        <li><strong>Caída de Escombros Pequeños:</strong> El "Triángulo de la Vida" no protege de la caída de escombros no estructurales (ladrillos sueltos, yeso, lámparas, contenido de estantes) que son una causa común de lesiones.</li>
+                        <li><strong>Dificultad de Aplicación:</strong> Es difícil predecir en segundos cómo colapsará una estructura o qué objeto formará un vacío seguro.</li>
+                    </ul>
+                    <div class="alert-banner"> 
+                        <i class="fas fa-shield-alt"></i> 
+                        <div> 
+                            <h3>Recomendación Oficial Primaria: ACS</h3> 
+                            <p>La técnica universalmente recomendada por expertos y agencias de emergencia es <strong>"Agacharse, Cubrirse y Sujetarse" (ACS)</strong>. Esta técnica protege de la causa más común de lesiones en sismos: la caída de objetos. Es simple, aplicable en la mayoría de las situaciones y edificios, y ha demostrado salvar vidas.</p> 
+                            <p><strong>Evalúe su entorno, pero priorice ACS a menos que una evaluación experta específica indique lo contrario para su tipo de edificación.</strong></p>
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+        </section>
+        
+        <section id="lugares" class="section">
+            <h2><i class="fas fa-map-marker-alt"></i> Identificación de Lugares Seguros y Zonas de Evacuación</h2>
+            <p class="text-sample-source">Conocer y identificar previamente los lugares seguros, tanto internos como externos, es fundamental para una respuesta rápida y efectiva durante y después de un sismo.</p>
+            
+            <div class="map-container">
+                <div class="map-overlay"> 
+                    <h3>Zonas Seguras Externas en Lima</h3> 
+                    <p>INDECI y las municipalidades distritales han designado numerosos parques, campos deportivos, lozas deportivas y grandes espacios abiertos como zonas seguras de reunión tras un sismo. Algunos ejemplos generales:</p>
+                    <ul>
+                        <li>Campo de Marte (Jesús María)</li>
+                        <li>Parque de la Exposición, Parque Universitario (Cercado de Lima)</li>
+                        <li>Parque Kennedy, Parque Reducto Nº2, Malecón (Miraflores)</li>
+                        <li>Pentagonito (San Borja)</li>
+                        <li>Plazas de Armas y parques principales de cada distrito.</li>
+                    </ul>
+                    <p><strong>Es vital que consulte el plan de evacuación específico de su distrito y reconozca las zonas seguras cercanas a su hogar, trabajo y lugares que frecuenta.</strong></p> 
+                </div>
+                <div class="map-placeholder"> 
+                    <div> 
+                        <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: #3498db; margin-bottom: 15px;"></i> 
+                        <h3>Mapa Interactivo (Próximamente)</h3> 
+                        <p>Idealmente, aquí se integraría un mapa interactivo con las zonas seguras de evacuación oficiales de Lima Metropolitana y Callao, geolocalizadas y con rutas sugeridas.</p> 
+                    </div> 
+                </div>
+            </div>
+
+            <h3 style="margin-top:2rem;"><i class="fas fa-home"></i> Zonas Seguras en Diferentes Entornos:</h3>
+            <div class="info-grid" style="margin-top: 1rem;">
+                <div class="info-card">
+                    <h3><i class="fas fa-building-shield"></i> En Edificios (Viviendas, Oficinas)</h3>
+                    <p class="text-sample-source"><strong>Zonas Seguras Internas (estructuralmente más resistentes):</strong></p>
+                    <ul>
+                        <li><strong>Junto a columnas de carga principales:</strong> Son los pilares que soportan el peso del edificio. Identifíquelas (suelen ser más gruesas que los tabiques).</li>
+                        <li><strong>Bajo vigas estructurales sólidas:</strong> Elementos horizontales que transmiten cargas a las columnas.</li>
+                        <li><strong>Bajo mesas o escritorios robustos y resistentes:</strong> Que puedan soportar la caída de objetos. Asegúrese de que no tengan vidrio encima.</li>
+                        <li><strong>Pasillos interiores:</strong> Lejos de ventanas y si los muros son de carga.</li>
+                        <li><strong>Cerca de los cajones de ascensores o escaleras estructurales:</strong> Estas áreas suelen tener un refuerzo estructural adicional. NO dentro del ascensor.</li>
+                    </ul>
+                    <p><strong>Zonas a Evitar:</strong> Cerca de ventanas, espejos, vitrinas, estanterías altas, objetos colgantes (lámparas, cuadros pesados). Evitar cocinas (riesgo de caída de utensilios, fugas de gas) y baños (espejos, azulejos, porcelana que puede romperse).</p>
+                    <p><strong>Marcos de Puertas:</strong> Solo son seguros si se tiene la certeza de que el muro es estructuralmente resistente y el dintel (viga sobre la puerta) es de carga. En muchas construcciones modernas, los marcos son de tabiquería ligera y no ofrecen protección.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-school-flag"></i> En Colegios y Universidades</h3>
+                    <p class="text-sample-source"><strong>Zonas Seguras Dentro de Aulas/Salones:</strong></p>
+                    <ul>
+                        <li>Debajo de pupitres o mesas fuertes, sujetándose a una pata.</li>
+                        <li>Si no hay mesas, junto a muros de carga interiores, agachados y cubriéndose cabeza y cuello.</li>
+                        <li>Alejados de ventanas, estantes altos y proyectores.</li>
+                    </ul>
+                    <p><strong>Zonas de Evacuación y Puntos de Reunión:</strong></p>
+                    <ul>
+                        <li>Patios centrales, campos deportivos, canchas o cualquier área abierta designada en el plan de seguridad de la institución.</li>
+                        <li>Deben estar lejos de fachadas de edificios, postes, árboles altos y cables.</li>
+                    </ul>
+                    <p><strong>Protocolo:</strong> Es crucial seguir las indicaciones de profesores, brigadistas y personal capacitado. Mantener la calma, evacuar en orden, no correr ni empujar. Conocer las rutas de evacuación señalizadas.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-store-alt"></i> En Centros Comerciales, Tiendas, Supermercados</h3>
+                    <p class="text-sample-source"><strong>Durante el Sismo:</strong></p>
+                    <ul>
+                        <li>Aléjese inmediatamente de estanterías altas, góndolas, vitrinas, escaparates y objetos colgantes (letreros, decoración).</li>
+                        <li>Si es posible, agáchese, cúbrase y sujétese junto a columnas estructurales robustas o paredes sólidas.</li>
+                        <li>Si está cerca de la salida y es seguro, intente salir a un espacio abierto.</li>
+                    </ul>
+                    <p><strong>Evacuación:</strong> Siga las indicaciones del personal de seguridad y las señales de evacuación. Diríjase con calma a las salidas de emergencia designadas y luego a los puntos de reunión externos establecidos por el local.</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-road"></i> En la Vía Pública o Espacios Abiertos</h3>
+                    <p class="text-sample-source"><strong>Alejarse de Peligros Inmediatos:</strong></p>
+                    <ul>
+                        <li><strong>Edificios:</strong> Riesgo de caída de escombros, vidrios, cornisas, balcones, revestimientos.</li>
+                        <li><strong>Postes de luz y teléfono:</strong> Pueden caer o desprender cables energizados.</li>
+                        <li><strong>Cables eléctricos:</strong> Asumir siempre que están energizados y mantener distancia.</li>
+                        <li><strong>Árboles altos o débiles:</strong> Pueden caer o desprender ramas grandes.</li>
+                        <li><strong>Vallas publicitarias y letreros grandes.</strong></li>
+                        <li><strong>Puentes y pasos a desnivel:</strong> Pueden colapsar.</li>
+                    </ul>
+                    <p><strong>Buscar Espacios Seguros:</strong> Diríjase al centro de calles anchas (si no hay tráfico), plazas, parques o cualquier área abierta lo más alejada posible de los peligros mencionados. Tenga cuidado con el tráfico que podría estar descontrolado.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contactos" class="section">
+            <h2><i class="fas fa-phone-volume"></i> Contactos de Emergencia en Perú</h2>
+            <div class="emergency-contacts">
+                <div class="contact-card">
+                    <i class="fas fa-truck-medical" style="font-size: 2rem; color: var(--primary);"></i>
+                    <h3>Emergencias Médicas (SAMU)</h3>
+                    <span class="contact-number"><a href="tel:106">106</a></span>
+                    <p>Atención médica de urgencia y ambulancias</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-fire-extinguisher" style="font-size: 2rem; color: var(--primary);"></i>
+                    <h3>Bomberos</h3>
+                    <span class="contact-number"><a href="tel:116">116</a></span>
+                    <p>Incendios, rescates, emergencias varias</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-user-shield" style="font-size: 2rem; color: var(--primary);"></i>
+                    <h3>Policía Nacional (PNP)</h3>
+                    <span class="contact-number"><a href="tel:105">105</a></span>
+                    <p>Emergencias policiales, seguridad ciudadana</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-house-chimney-medical" style="font-size: 2rem; color: var(--primary);"></i>
+                    <h3>INDECI (Defensa Civil)</h3>
+                    <span class="contact-number"><a href="tel:119">119</a></span>
+                    <p>Información y coordinación (Opción 1 para emergencias)</p>
+                </div>
+                 <div class="contact-card">
+                    <i class="fas fa-water" style="font-size: 2rem; color: var(--primary);"></i>
+                    <h3>SEDAPAL (Agua)</h3>
+                    <span class="contact-number"><a href="tel:013178000">(01) 317-8000</a></span>
+                    <p>Emergencias de agua/desagüe</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-lightbulb" style="font-size: 2rem; color: var(--primary);"></i>
+                    <h3>Empresa Eléctrica</h3>
+                    <p>Luz del Sur: <a href="tel:016175000">(01) 617-5000</a></p>
+                    <p>Enel: <a href="tel:015171717">(01) 517-1717</a></p>
+                </div>
+            </div>
+            <div class="alert-banner" style="margin-top: 2rem;"> <i class="fas fa-mobile-alt"></i> <div> <h3>Mensajes de Voz (119)</h3> <p>En caso de colapso de redes, use el 119 para dejar mensajes de voz a sus contactos (marque 119 + 1 + N° cel o 119 + 2 + N° fijo).</p> </div> </div>
+        </section>
+
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <h3>Preparados Perú - Información para la seguridad ciudadana</h3>
+            <p>Información recopilada y adaptada de fuentes oficiales: INDECI, MINSA, CGBVP, IGP y otras entidades relevantes.</p>
+            <div class="update-info"> Última actualización: <span class="last-update" id="lastUpdateDate"></span> </div>
+            <p style="margin-top: 1rem;">© <span id="currentYear"></span> Preparados Perú - Todos los derechos reservados</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const sections = document.querySelectorAll('.section');
+            const body = document.body;
+            const sismoModal = document.getElementById('sismoModal');
+            const modalQueHacerBtn = document.getElementById('modalQueHacerBtn');
+            const sismoAlertaSound = document.getElementById('sismoAlertaSound');
+            let activityTimer;
+            const SIMULATION_TIMEOUT = 5 * 60 * 1000; // 5 minutos para simulación intensa
+            // const SIMULATION_TIMEOUT = 15 * 1000; //  Para pruebas: 15 segundos 
+
+            function setActiveSection(targetId, shouldScroll = true) {
+                let sectionActivated = false;
+                sections.forEach(section => {
+                    if (section.id === targetId) {
+                        if (!section.classList.contains('active')) {
+                            section.classList.add('active');
+                            sectionActivated = true;
+                        }
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+
+                if (sectionActivated && shouldScroll) {
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        const navHeight = document.querySelector('.nav-container')?.offsetHeight || 0;
+                        setTimeout(() => { 
+                            window.scrollTo({
+                                top: targetSection.offsetTop - navHeight - 20, 
+                                behavior: 'smooth'
+                            });
+                        }, 50); 
+                    }
+                } else if (!sectionActivated && shouldScroll && document.getElementById(targetId)) {
+                    const targetSection = document.getElementById(targetId);
+                     const navHeight = document.querySelector('.nav-container')?.offsetHeight || 0;
+                     setTimeout(() => {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - navHeight - 20,
+                            behavior: 'smooth'
+                        });
+                    }, 50);
+                }
+                return sectionActivated; 
+            }
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const changed = setActiveSection(targetId); 
+                    
+                    if (changed) { 
+                        body.classList.add('shake-light');
+                        setTimeout(() => { body.classList.remove('shake-light'); }, 500);
+                    }
+                    resetActivityTimer(); 
+                });
+            });
+
+            function showSismoSimulation() {
+                if (sismoModal.style.display === 'flex') return; 
+
+                if (sismoAlertaSound && typeof sismoAlertaSound.play === 'function') {
+                    sismoAlertaSound.play().catch(e => console.warn("Reproducción de audio bloqueada o fallida:", e));
+                }
+
+                sismoModal.style.display = 'flex';
+                body.classList.add('shake-intense');
+
+                const sampleTexts = document.querySelectorAll('.text-sample-source');
+                sampleTexts.forEach(p => {
+                    if (!p.dataset.originalText) {
+                        p.dataset.originalText = p.innerHTML; 
+                    }
+                    
+                    const textToAnimate = p.textContent; 
+                    p.innerHTML = ''; 
+                    textToAnimate.split('').forEach((char, index) => {
+                        const span = document.createElement('span');
+                        span.textContent = char;
+                        span.style.animationDelay = `${index * 0.015}s`; 
+                        p.appendChild(span);
+                    });
+                    p.classList.add('text-disarray'); 
+                });
+
+                setTimeout(() => {
+                    body.classList.remove('shake-intense');
+                    sampleTexts.forEach(p => {
+                        p.classList.remove('text-disarray');
+                        if (p.dataset.originalText) {
+                            p.innerHTML = p.dataset.originalText;
+                        }
+                    });
+                }, 2000); 
+            }
+
+            modalQueHacerBtn.addEventListener('click', function() {
+                sismoModal.style.display = 'none';
+                body.classList.remove('shake-intense'); 
+                const sampleTexts = document.querySelectorAll('.text-sample-source.text-disarray');
+                sampleTexts.forEach(p => {
+                    p.classList.remove('text-disarray');
+                     if (p.dataset.originalText) {
+                        p.innerHTML = p.dataset.originalText;
+                    }
+                });
+                setActiveSection('que-hacer'); 
+                resetActivityTimer();
+            });
+
+            function resetActivityTimer() {
+                clearTimeout(activityTimer);
+                activityTimer = setTimeout(showSismoSimulation, SIMULATION_TIMEOUT);
+            }
+            
+            resetActivityTimer();
+            ['mousemove', 'scroll', 'keypress', 'click'].forEach(eventType => {
+                document.addEventListener(eventType, resetActivityTimer, { passive: true });
+            });
+
+            const today = new Date();
+            const optionsDate = { year: 'numeric', month: 'long', day: 'numeric' };
+            const lastUpdateElem = document.getElementById('lastUpdateDate');
+            if(lastUpdateElem) lastUpdateElem.textContent = today.toLocaleDateString('es-ES', optionsDate);
+            
+            const currentYearElem = document.getElementById('currentYear');
+            if(currentYearElem) currentYearElem.textContent = today.getFullYear();
+
+            if (!document.querySelector('.section.active')) {
+                setActiveSection('que-es', false); 
+            }
+        });
+    </script>
+</body>
+</html>
