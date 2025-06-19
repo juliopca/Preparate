@@ -1174,19 +1174,26 @@
             }
         });
     </script>
-    <!-- ...cuerpo de tu página... -->
-
-<!-- Contador de visitas (invisible por defecto) -->
-<div id="contador" style="display: none;">
+<!-- Contador de visitas (oculto por defecto) -->
+<div id="contador" style="display: none; text-align: center; margin-top: 20px;">
   <img src="https://hitwebcounter.com/counter/counter.php?page=12688239&style=0006&nbdigits=5&type=page&initCount=0" 
        alt="contador de visitas" />
+  <p style="color: gray; font-size: 14px;">Contador de visitas (solo visible con clave)</p>
 </div>
 
 <script>
-  const claveSecreta = "vercontador";
+  // Clave secreta para mostrar el contador
+  const claveSecreta = "2468";
+
+  // Leer los parámetros de la URL
   const params = new URLSearchParams(window.location.search);
+
+  // Mostrar el contador si la clave es correcta
   if (params.get("clave") === claveSecreta) {
-    document.getElementById("contador").style.display = "block";
+    const contador = document.getElementById("contador");
+    if (contador) {
+      contador.style.display = "block";
+    }
   }
 </script>
 </body>
